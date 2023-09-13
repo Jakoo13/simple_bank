@@ -1,5 +1,5 @@
 createPgContainer:
-	docker run --name postgres-12 -p 5432:5432 -e POSTGRES_USER=jakew20 -e POSTGRES_PASSWORD=Fatkid06 -d postgres:12-alpine
+	docker run --name postgres-12 --network bank-network -p 5432:5432 -e POSTGRES_USER=jakew20 -e POSTGRES_PASSWORD=Fatkid06 -d postgres:12-alpine
 
 startPgContainer:
 	docker start postgres-12
