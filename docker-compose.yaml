@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=jakew20
+      - POSTGRES_PASSWORD=Fatkid06
+      - POSTGRES_DB=simple_bank
+    ports:
+      - "5432:5432"
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+    # Using name of postgres service above after the @
+      - DB_SOURCE=postgresql://jakew20:Fatkid06@postgres:5432/simple_bank?sslmode=disable
+    depends_on:
+      - postgres
+    # This overwrites the entry point and clears out any CMD instructions in the dockerfile. They will be ignored. Therefore have to specify the entrypoint and cmd here.
+    entrypoint: [ "/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh" ]
+    command: [ "/app/main" ]
