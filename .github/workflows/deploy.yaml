@@ -35,6 +35,8 @@ jobs:
               REPOSITORY: simplebank
               IMAGE_TAG: ${{ github.sha }}
             run: |
-              docker buildx create –use
+              docker buildx create \ 
+                --name mybuilder \
+                default
               docker buildx build --platform linux/amd64,linux/arm64 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --push .
               docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
