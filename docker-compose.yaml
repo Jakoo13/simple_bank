@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   postgres:
+    platform: linux/amd64
     image: postgres:12-alpine
     environment:
       - POSTGRES_USER=jakew20
@@ -19,6 +20,7 @@ services:
       - DB_SOURCE=postgresql://jakew20:Fatkid06@postgres:5432/simple_bank?sslmode=disable
     depends_on:
       - postgres
+    platform: linux/amd64
     # This overwrites the entry point and clears out any CMD instructions in the dockerfile. They will be ignored. Therefore have to specify the entrypoint and cmd here.
     entrypoint: [ "/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh" ]
     command: [ "/app/main" ]
