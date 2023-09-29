@@ -33,7 +33,7 @@ jobs:
               REPOSITORY: simplebank
               IMAGE_TAG: v1-amd64
             run: |
-              docker build --platform=linux/amd64 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --platform=linux/arm64 . --build-arg architecture=arm64
+              docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --platform=linux/amd64 . --build-arg architecture=amd64
               docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
           - name: Build, tag, and push arm image to Amazon ECR
