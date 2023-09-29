@@ -5,8 +5,6 @@ on:
       - main
 
 jobs:
-
-
     build:
         name: Build Image
         runs-on: ubuntu-latest
@@ -34,7 +32,12 @@ jobs:
               REGISTRY: ${{ steps.login-ecr.outputs.registry }}
               REPOSITORY: simplebank
               IMAGE_TAG: ${{ github.sha }}
-            run: |
-              docker buildx create default --use
-              docker buildx build --platform linux/amd64,linux/arm64 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --push .
-              docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            run:
+              docker build -t $REGISTRY/$REPOSITORY:v1-arm64 --platform linux/arm64 .
+              docker push $REGISTRY/$REPOSITORY:v1-arm64
+              docker build -t $REGISTRY/$REPOSITORY:v1-amd64 --platform linux/amd64 .
+              docker push $REGISTRY/$REPOSITORY:v1-amd64
+              docker manifest create $REGISTRY/$REPOSITORY:v1 $REGISTRY/$REPOSITORY:v1-arm64 $REGISTRY/$REPOSITORY:v1-amd64
+              docker manifest push $REGISTRY/$REPOSITORY:v1
+
+              
