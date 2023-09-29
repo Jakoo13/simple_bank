@@ -33,7 +33,7 @@ jobs:
               REPOSITORY: simplebank
               IMAGE_TAG: ${{ github.sha }}
             run:
-              docker build -t $REGISTRY/$REPOSITORY:v1-amd64 --platform linux/amd64 .
+              docker build -t $REGISTRY/$REPOSITORY:v1-amd64 --platform linux/amd64 . --build-arg arg=amd64
               # docker push $REGISTRY/$REPOSITORY:v1-amd64
 
           - name: Build, tag, and push arm image to Amazon ECR
@@ -42,7 +42,7 @@ jobs:
               REPOSITORY: simplebank
               IMAGE_TAG: ${{ github.sha }}
             run:
-              docker build -t $REGISTRY/$REPOSITORY:v1-arm64 --platform linux/arm64 .
+              docker build -t $REGISTRY/$REPOSITORY:v1-arm64 --platform linux/arm64 . --build-arg arg=arm64
               # docker push $REGISTRY/$REPOSITORY:v1-arm64
 
           - name: Create and push manifest list
