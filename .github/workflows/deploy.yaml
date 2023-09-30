@@ -27,14 +27,14 @@ jobs:
           - name: Load secrets and save to app.env
             run: aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
 
-          - name: Build, tag, and push amd image to Amazon ECR
-            env:
-              REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-              REPOSITORY: simplebank
-              IMAGE_TAG: v1-amd64
-            run: |
-              docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --platform=linux/amd64 . --build-arg architecture=amd64
-              docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          # - name: Build, tag, and push amd image to Amazon ECR
+          #   env:
+          #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          #     REPOSITORY: simplebank
+          #     IMAGE_TAG: v1-amd64
+          #   run: |
+          #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --platform=linux/amd64 . --build-arg architecture=amd64
+          #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
           - name: Build, tag, and push arm image to Amazon ECR
             env:
@@ -42,19 +42,19 @@ jobs:
               REPOSITORY: simplebank
               IMAGE_TAG: v1-arm64
             run: |
-              docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG  --platform=linux/arm64 . --build-arg architecture=arm64
+              docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG --platform=linux/arm64 . 
               docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-          - name: create docker manifest list
-            env:
-              REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-              REPOSITORY: simplebank
-              IMAGE_TAG: v1
-            run: |
-              docker manifest create $REGISTRY/$REPOSITORY:$IMAGE_TAG \
-                $REGISTRY/$REPOSITORY:v1-arm64 \
-                $REGISTRY/$REPOSITORY:v1-amd64
-              docker manifest push $REGISTRY/$REPOSITORY:$IMAGE_TAG 
+          # - name: create docker manifest list
+          #   env:
+          #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          #     REPOSITORY: simplebank
+          #     IMAGE_TAG: v1
+          #   run: |
+          #     docker manifest create $REGISTRY/$REPOSITORY:$IMAGE_TAG \
+          #       $REGISTRY/$REPOSITORY:v1-arm64 \
+          #       $REGISTRY/$REPOSITORY:v1-amd64
+          #     docker manifest push $REGISTRY/$REPOSITORY:$IMAGE_TAG 
 
           
             

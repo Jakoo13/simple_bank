@@ -28,6 +28,13 @@ migratedown:
 migratedown1:
 	migrate -path db/migration -database "postgresql://jakew20:Fatkid06@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
+createApiAndDbContainers:
+# Does the same things as pressing play in docker desktop
+	docker-compose up
+
+deleteApiAndDbContainers:
+	docker-compose down
+
 sqlc:
 	sqlc generate
 
