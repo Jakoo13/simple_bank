@@ -1,10 +1,8 @@
 # Build Stage
 FROM golang:1.21.1-alpine3.18 AS builder 
 WORKDIR /app
-COPY go.mod .
-COPY go.sum .
 COPY . .
-RUN go build -o main main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o main main.go
 RUN apk add curl
 RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-arm64.tar.gz | tar xvz
 
