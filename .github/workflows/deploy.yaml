@@ -38,8 +38,11 @@ jobs:
         REPOSITORY: simplebank
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -t latest . 
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -t $REGISTRY/$REPOSITORY:$IMAGE_TAG:latest . 
         docker push -a $REGISTRY/$REPOSITORY
+
+    - name: Update Kube config
+      run: aws eks --region us-east-1 update-kubeconfig --name simple-bank
 
     - name: Deploy Image to Amazon
       run: |
