@@ -9,7 +9,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: simple-bank-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
+  # Has to match the name above 
   ingressClassName: nginx
   rules:
   - host: "api.expatx.net"
@@ -22,3 +25,7 @@ spec:
             name: simple-bank-api-service
             port:
               number: 80
+  tls:
+  - hosts:
+    - api.expatx.net
+    secretName: simple-bank-api-cert
