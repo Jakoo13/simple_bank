@@ -38,10 +38,19 @@ deleteApiAndDbContainers:
 sqlc:
 	sqlc generate
 
+db_docs:
+	dbdocs build doc/db.dbml
+
 test:
 	go test -v -cover ./...
 
 server:
 	go run main.go
 
-.PHONY: createdb dropdb migrateup migratedown sqlc test server migrateupone migratedownone createPgContainer startPgContainer
+proto:
+	rm -f pb/*.go
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+	proto/*.proto
+
+.PHONY: createdb dropdb migrateup migratedown sqlc test server migrateupone migratedownone createPgContainer startPgContainer db_docs createApiAndDbContainers deleteApiAndDbContainers migrateupaws migratedownaws migrateup1 migratedown1 proto
