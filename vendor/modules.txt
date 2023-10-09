@@ -228,6 +228,7 @@ golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 # google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1
 ## explicit; go 1.19
+google.golang.org/genproto/googleapis/rpc/errdetails
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.55.0
 ## explicit; go 1.17
