@@ -53,4 +53,7 @@ proto:
 	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 	proto/*.proto
 
-.PHONY: createdb dropdb migrateup migratedown sqlc test server migrateupone migratedownone createPgContainer startPgContainer db_docs createApiAndDbContainers deleteApiAndDbContainers migrateupaws migratedownaws migrateup1 migratedown1 proto
+evans:
+	evans --host localhost --port 9090 -r repl
+
+.PHONY: createdb dropdb migrateup migratedown sqlc test server migrateupone migratedownone createPgContainer startPgContainer db_docs createApiAndDbContainers deleteApiAndDbContainers migrateupaws migratedownaws migrateup1 migratedown1 proto evans
