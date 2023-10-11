@@ -12,6 +12,9 @@ import (
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
 func main() {
@@ -25,9 +28,26 @@ func main() {
 		log.Fatal("Cannot connect to db", err)
 	}
 
+	// Run db migrations
+	runDBMigrations(config.MigrationURL, config.DBSource)
+
 	store := db.NewStore(conn)
 	runGrpcServer(config, store)
 
+}
+
+func runDBMigrations(migrationURL string, dbSource string){
+	migration, err := migrate.New(migrationURL, dbSource)
+	if err != nil {
+		log.Fatal("Cannot create migration:", err)
+	}
+
+	err = migration.Up()
+	if err != nil && err != migrate.ErrNoChange {
+		log.Fatal("Cannot run migrate up:", err)
+	}
+
+	log.Println("DB migrated successfully")
 }
 
 func runGrpcServer(config util.Config, store db.Store) {
