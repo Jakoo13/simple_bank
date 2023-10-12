@@ -11,6 +11,8 @@ metadata:
   name: simple-bank-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
 spec:
   # Has to match the name above 
   ingressClassName: nginx
