@@ -28,6 +28,7 @@ type Querier interface {
 	ListEntries(ctx context.Context, accountID int64) ([]Entry, error)
 	ListTransfers(ctx context.Context, arg ListTransfersParams) ([]Transfer, error)
 	UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error)
+	// This Coalesce is to allow us to update only the optional fields that are passed in
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }
 
