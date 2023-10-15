@@ -19,4 +19,4 @@ spec:
         image: 610855009960.dkr.ecr.us-east-1.amazonaws.com/simplebank:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 9090
+        - containerPort: 8080
