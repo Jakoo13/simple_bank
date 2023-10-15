@@ -17,7 +17,10 @@ services:
       - "9090:9090"
     environment:
     # Using name of postgres service above after the @
+    # How the api connects to the postgres service
+    # Rather than using "localhost" here, we use "postgres"- the name from above
       - DB_SOURCE=postgresql://jakew20:Fatkid06@postgres:5432/simple_bank?sslmode=disable
+    # ensure the api service starts after the postgres service, but doesn't ensure it's in ready state. For this we have the wait-for.sh we copied from Github Repo 
     depends_on:
       - postgres
     # This overwrites the entry point and clears out any CMD instructions in the dockerfile. They will be ignored. Therefore have to specify the entrypoint and cmd here.
