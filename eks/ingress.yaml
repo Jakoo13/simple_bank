@@ -11,21 +11,21 @@ metadata:
   name: simple-bank-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
 spec:
-  # Has to match the name above 
+  # should match the metadata name above 
   ingressClassName: nginx
   rules:
   - host: "api.expatx.net"
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - pathType: Prefix
+        path: "/"
         backend:
           service:
+          # Service to route traffic to
             name: simple-bank-api-service
             port:
+              # Needs to match the "port" keyword in the service definition in service.yaml
               number: 80
   tls:
   - hosts:
