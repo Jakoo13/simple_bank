@@ -1,22 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-bank-api-deployment
-  labels:
-    app: simple-bank-api
+  name: grpcserver
+  namespace: grpcserver
 spec:
   replicas: 2
   selector: 
     matchLabels:
-      app: simple-bank-api
+      app: grpcserver
   template:
     metadata:
       labels:
-        app: simple-bank-api
+        app: grpcserver
     spec:
       containers:
-      - name: simple-bank-api
+      - name: grpc-api
         image: 610855009960.dkr.ecr.us-east-1.amazonaws.com/simplebank:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - name: grpc-port
+          containerPort: 9090
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+      restartPolicy: Always
