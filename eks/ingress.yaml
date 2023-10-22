@@ -35,7 +35,7 @@ spec:
             name: grpcserver
             port:
               number: 50051
-        path: /
+        path: /SimpleBank
         pathType: Prefix
         
 
