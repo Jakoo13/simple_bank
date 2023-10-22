@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - name: grpc-port
-          containerPort: 9090
+          containerPort: 50051
         env:
         - name: POD_IP
           valueFrom:

@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-      - "9090:9090"
+      - "50051:50051"
     environment:
     # Using name of postgres service above after the @
     # How the api connects to the postgres service
