@@ -5,9 +5,9 @@ metadata:
   namespace: grpcserver
 spec:
   ports:
-  - port: 9090
+  - port: 50051
     protocol: TCP
-    targetPort: 9090
+    targetPort: 50051
   clusterIP: None
   selector:
     app: grpcserver
