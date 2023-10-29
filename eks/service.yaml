@@ -6,7 +6,11 @@ spec:
   selector:
     app: simple-bank-api
   ports:
+  # - protocol: TCP
+  #   port: 80
+  #   targetPort: http-server
   - protocol: TCP
-    port: 80
-    targetPort: 8080
+    port: 90
+    targetPort: grpc-server
+    name: grpc-service
   type: ClusterIP

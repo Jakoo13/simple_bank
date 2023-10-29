@@ -20,7 +20,7 @@ COPY wait-for.sh .
 COPY db/migration ./db/migration
 
 # This Expose command is only for documentation for dev reading this file. Doesn't actually do anything 
-EXPOSE 8080
+EXPOSE 8080 9090
 # final command that will run the above created binary file
 CMD [ "/app/main" ]
 # originally used this to run db migrations, but now are running them within go code. Keeping for reference for how to use this. 

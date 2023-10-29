@@ -1,50 +1,19 @@
 # apiVersion: networking.k8s.io/v1
-# kind: IngressClass
+# kind: Ingress
 # metadata:
-#   name: nginx
+#   name: simple-bank-ingress
+#   # annotations:
+#     # cert-manager.io/cluster-issuer: letsencrypt
 # spec:
-#   controller: k8s.io/ingress-nginx
-# ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: simple-bank-ingress
-  annotations:
-    # cert-manager.io/cluster-issuer: letsencrypt
-    # alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig":
-    #   { "Protocol": "HTTPS", "Port": "9090", "StatusCode": "HTTP_301"}}'
-    # alb.ingress.kubernetes.io/backend-protocol-version: GRPC
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    # alb.ingress.kubernetes.io/backend-protocol: HTTPS
-    # alb.ingress.kubernetes.io/ssl-redirect: '443'
-    # alb.ingress.kubernetes.io/scheme: internet-facing
-    # alb.ingress.kubernetes.io/target-type: ip
-    kubernetes.io/ingress.class: alb
-    # alb.ingress.kubernetes.io/subnets: subnet-008c647158df386ce,subnet-0a2b66f72cb1cfacf,subnet-0d6f9855bf29d108d,subnet-070fb725add4d8370,subnet-0ae89eaa0d158696c
-    # alb.ingress.kubernetes.io/security-groups: sg-0d76018b1795439df                       
-    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:610855009960:certificate/5321c587-ad89-46a0-a12f-58ab02164f3f
-  # labels:
-  #   app: grpcserver
-  #   environment: dev
-  # namespace: grpcserver
-spec:
-  ingressClassName: alb
-  rules:
-  - host: api.expatx.net
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: simple-bank-api-service
-            port:
-              number: 80
-        
----
-apiVersion: networking.k8s.io/v1
-kind: IngressClass
-metadata:
-  name: alb
-spec:
-  controller: ingress.k8s.aws/alb
+#   ingressClassName: nginx
+#   rules:
+#   - host: "api.expatx.net"
+#     http:
+#       paths:
+#       - pathType: Prefix
+#         path: "/"
+#         backend:
+#           service:
+#             name: simple-bank-api-service
+#             port:
+#               number: 80
